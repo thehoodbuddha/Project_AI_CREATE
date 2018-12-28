@@ -1,7 +1,7 @@
 #pragma once
-#include "EyeTracking.h"
-#include "ofMain.h"
 
+#include "ofMain.h"
+#include "EyeTracking.h"
 class ofApp : public ofBaseApp{
 
 	public:
@@ -21,5 +21,4 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
 		EyeTracking track;
-		
 };
