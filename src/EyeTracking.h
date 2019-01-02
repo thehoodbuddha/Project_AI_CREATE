@@ -15,15 +15,16 @@ public:
 	EyeTracking();
 	int cam_Check();
 	int Eyetrack_Main();
+	cv::Point locationPoint;
 
 private:
 	std::vector<cv::Point> centers;
 	cv::Point lastPoint;
-
 	cv::CascadeClassifier faceCascade;
 	cv::CascadeClassifier eyeCascade;
-	void detectEyes(cv::Mat &frame, cv::CascadeClassifier &faceCascade, cv::CascadeClassifier &eyeCascade);
+
 	int Load_Data();
+	void detectEyes(cv::Mat &frame, cv::CascadeClassifier &faceCascade, cv::CascadeClassifier &eyeCascade);
 	cv::Rect getLeftmostEye(std::vector<cv::Rect> &eyes);
 	cv::Vec3f getEyeball(cv::Mat &eye, std::vector<cv::Vec3f> &circles);
 	cv::Point stabilize(std::vector<cv::Point> &points, int windowSize);

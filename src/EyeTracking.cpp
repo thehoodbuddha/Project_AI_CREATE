@@ -14,6 +14,7 @@ EyeTracking::EyeTracking() {
 	cv::CascadeClassifier eyeCascade;
 	std::vector<cv::Point> centers;
 	cv::Point lastPoint;
+	cv::Point locationPoint;
 
 };
 
@@ -39,7 +40,7 @@ int EyeTracking::Eyetrack_Main(){
 		cap >> frame; // outputs the webcam image to a Mat
 		if (!frame.data) break;
 		detectEyes(frame, faceCascade, eyeCascade);
-		cv::imshow("Webcam", frame); // displays the Mat
+	//	cv::imshow("Webcam", frame); // displays the Mat
 		if (cv::waitKey(5) >= 0) break;  // takes 30 frames per second. if the user presses any button, it stops from showing the webcam
 	}
 	return 0;
@@ -57,12 +58,12 @@ int EyeTracking::cam_Check(){
 	while (1)
 	{
 		cap >> frame; // outputs the webcam image to a Mat
-		cv::imshow("Webcam", frame); // displays the Mat
+		//cv::imshow("Webcam", frame); // displays the Mat
 		if (cv::waitKey(30) >= 0) break; // takes 30 frames per second. if the user presses any button, it stops from showing the webcam
 	}
 	return 0;	
 };
-std::vector<cv::Point> centers;
+
 
 void EyeTracking::detectEyes(cv::Mat &frame, cv::CascadeClassifier &faceCascade, cv::CascadeClassifier &eyeCascade)
 {
@@ -76,7 +77,7 @@ void EyeTracking::detectEyes(cv::Mat &frame, cv::CascadeClassifier &faceCascade,
 	faceCascade.detectMultiScale(grayscale, faces, 1.5, 3, 0| CV_HAAR_SCALE_IMAGE, cv::Size(170, 170));
 
 	if (faces.size() == 0) return; // none face was detected
-	if (faces.size() == 1) std::cout << "facedetected" << std::endl;
+	//if (faces.size() == 1) std::cout << "facedetected" << std::endl;
 
 	cv::Mat face = frame(faces[0]); // crop the face
 	eyeCascade.detectMultiScale(face, eyes, 1.1, 4, 0| CV_HAAR_SCALE_IMAGE, cv::Size(30,30)); // same thing as above  
@@ -93,30 +94,44 @@ void EyeTracking::detectEyes(cv::Mat &frame, cv::CascadeClassifier &faceCascade,
 	//cv::equalizeHist(eye, eye);
 	std::vector<cv::Vec3f> circles;
 //	cv::cvtColor(eye, grayscale, cv::COLOR_RGB2GRAY); // convert image to grayscale
-	cv:Mat eyeGrayScale;	
+	cv::Mat eyeGrayScale;	
 	cv::cvtColor(eye, eyeGrayScale,cv::COLOR_RGB2GRAY);
+
 	cv::HoughCircles(eyeGrayScale, circles, cv::HOUGH_GRADIENT, 1, eyeGrayScale.cols / 8, 250, 15, eyeGrayScale.rows / 8, eyeGrayScale.rows / 3);
+
 	if (circles.size() > 0)
 	{
 		cv::Vec3f eyeball = getEyeball(eye, circles);
 		cv::Point center(eyeball[0], eyeball[1]);
 		centers.push_back(center);
 		center = stabilize(centers, 400);
+		
 		if (centers.size() > 1)
 		{
+			//std::cout << "detected" << std::endl; 
 			cv::Point diff;
 			diff.x = (center.x - lastPoint.x) * 20;
-			diff.y = (center.y - lastPoint.y) * -20;
+			diff.y = (center.y - lastPoint.y) * -30;
 			std::cout << diff << std::endl;
+
+			locationPoint += diff;
+			std::cout << diff << std::endl;
+			if (locationPoint.x > 400) locationPoint.x = 400;
+			if (locationPoint.x < 0) locationPoint.x = 0;
 		}
 		lastPoint = center;
 		int radius = (int)eyeball[2];
 		cv::circle(frame, faces[0].tl() + eyeRect.tl() + center, radius, cv::Scalar(0, 0, 255), 2);
 		cv::circle(eye, center, radius, cv::Scalar(255, 255, 255), 2);
 	}
-	cv::imshow("Eye", eyeGrayScale);
+
+	//cv::Mat outImg;
+	//cv::resize(eyeGrayScale, outImg, cv::Size(eyeGrayScale.cols * 5, eyeGrayScale.rows * 5), 0, 0, cv::INTER_LINEAR);
+	//cv::imshow("Eye",outImg);
+
 };
 	
+
 
 cv::Vec3f EyeTracking::getEyeball(cv::Mat &eye, std::vector<cv::Vec3f> &circles)
 {
