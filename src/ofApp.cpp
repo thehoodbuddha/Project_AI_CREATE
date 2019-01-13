@@ -2,12 +2,18 @@
 #include <thread>
 //--------------------------------------------------------------
 void ofApp::setup(){
-
+	std::thread t(&EyeTracking::Eyetrack_Main, &track);
+	t.detach();
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
-	track.Eyetrack_Main();
+	//auto threadfunction = track.Eyetrack_Main;
+
+	//threadfunction();
+	//track * taskPtr= new EyeTracking();
+	//EyeTracking x; 
+	
 	
 }
 
@@ -15,12 +21,17 @@ void ofApp::update(){
 void ofApp::draw(){
 	ofBackground(0);  // Clear the screen with a black color
 	ofSetColor(255);  // Set the drawing color to white
-	std::cout << "faka" << std::endl;
+	//std::cout << "faka" << std::endl;
 	
+	
+	//std:thread t1(&track:Eyetracking_Main,this, "new");
 	
 	//if (location.y > frame.rows) location.y = frame.rows;
 	//if (location.y < 0) location.y = 0;
-	ofDrawEllipse(track.locationPoint.x, 200, 80, 80);
+	// ofDrawEllipse(track.locationPoint.x, track.locationPoint.y, 80, 80);
+	visual.direction_visuals(track.direction(track.locationPoint.x, track.locationPoint.y,640, 480),640,480,80);
+	std::cout << track.direction(track.locationPoint.x, track.locationPoint.y,640,480) << std::endl;
+
 	}
 
 //--------------------------------------------------------------

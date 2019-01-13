@@ -11,23 +11,20 @@
 class EyeTracking {
 
 public:
-	
+	cv::Point locationPoint;
 	EyeTracking();
 	int cam_Check();
 	int Eyetrack_Main();
-	cv::Point locationPoint;
+	int direction(float x, float y, int frame_x, int frame_y);
 
 private:
-	std::vector<cv::Point> centers;
+
 	cv::Point lastPoint;
 	cv::CascadeClassifier faceCascade;
 	cv::CascadeClassifier eyeCascade;
-
 	int Load_Data();
-	void detectEyes(cv::Mat &frame, cv::CascadeClassifier &faceCascade, cv::CascadeClassifier &eyeCascade);
-	cv::Rect getLeftmostEye(std::vector<cv::Rect> &eyes);
-	cv::Vec3f getEyeball(cv::Mat &eye, std::vector<cv::Vec3f> &circles);
-	cv::Point stabilize(std::vector<cv::Point> &points, int windowSize);
+	void faceDetect(cv::Mat &frame, cv::CascadeClassifier &faceCascade, cv::CascadeClassifier &eyeCascade);
+
 };
 
 
