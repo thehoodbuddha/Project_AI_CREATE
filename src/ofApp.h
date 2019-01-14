@@ -3,6 +3,7 @@
 #include "ofMain.h"
 #include "EyeTracking.h"
 #include "visual.h"
+#include "Grid.hpp"
 
 class ofApp : public ofBaseApp{
 
@@ -24,5 +25,6 @@ class ofApp : public ofBaseApp{
 		void gotMessage(ofMessage msg);
 		EyeTracking track;
 		Visual visual;
+		Grid grid;
 
 };

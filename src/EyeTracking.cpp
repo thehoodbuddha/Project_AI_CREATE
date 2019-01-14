@@ -70,48 +70,76 @@ int EyeTracking::cam_Check() {
 
 void EyeTracking::faceDetect(cv::Mat &frame, cv::CascadeClassifier &faceCascade, cv::CascadeClassifier &eyeCascade)
 {
-
+	
 	cv::Mat grayscale;
 	cv::cvtColor(frame, grayscale, cv::COLOR_RGB2GRAY); // convert image to grayscale
 	//cv::equalizeHist(grayscale, grayscale); // enhance image contrast 
 	std::vector<cv::Rect> faces;
 	std::vector<cv::Rect> eyes;
-	faceCascade.detectMultiScale(grayscale, faces, 1.5, 3, 0 | CV_HAAR_SCALE_IMAGE, cv::Size(170, 170));
+	faceCascade.detectMultiScale(grayscale, faces, 1.5, 3, 0 | CV_HAAR_SCALE_IMAGE, cv::Size(100, 100));
 	if (faces.size() == 0) return; // none face was detected
 	//if (faces.size() == 1) std::cout << "facedetected" << std::endl;
 
 	cv::Mat face = frame(faces[0]); // crop the face
 	eyeCascade.detectMultiScale(face, eyes, 1.1, 4, 0 | CV_HAAR_SCALE_IMAGE, cv::Size(30, 30)); // same thing as above  
-	rectangle(frame, faces[0].tl(), faces[0].br(), cv::Scalar(255, 0, 0), 2);
+
+
+	rectangle(frame, faces[0].tl(), faces[0].br(), cv::Scalar(255, 0, 0),2);
+
+	//std::cout << "X :" << (face.cols + faces[0].x)/2 <<  "Y :" << (face.rows + faces[0].y)/2 << std::endl;
+
 	if (eyes.size() != 2) return; // both eyes were not detected
 	for (cv::Rect &eye : eyes)
 	{
-		rectangle(frame, faces[0].tl() + eye.tl(), faces[0].tl() + eye.br(), cv::Scalar(0, 255, 0), 2);
+		rectangle(frame, faces[0].tl() + eye.tl(), faces[0].tl() + eye.br(), cv::Scalar(0, 255, 0), 3);
 	}
 
-	locationPoint.x = faces[0].x;
-	locationPoint.y = faces[0].y;
+	locationPoint.x = faces[0].x+( faces[0].br().x - faces[0].x )/2;
+	locationPoint.y = faces[0].y + (faces[0].br().y - faces[0].y) / 2;
+	//rectangle(frame, locationPoint.x, locationPoint.y, cv::Scalar(255, 0, 0), 2);
+	std::cout <<  locationPoint.x << std::endl;
+	//std::cout << frame.cols << std::endl;
+}	
 
-}
-
-int EyeTracking::direction(float x, float y, int frame_x, int frame_y)
+ int EyeTracking::direction(float x, float y, int frame_x, int frame_y)
 {
 
-	if ((y > frame_y / 2) && (x <= frame_x / 2 + 100) && (x >= frame_x / 2 - 100)){
-	return 2;
+	if ((y < frame_y / 2) && (x > frame_x / 3) && (x < frame_x*2/3)){
+	return 0;
 	}
-	else if((y < frame_y / 2) && (x <= frame_x / 2 + 100) && (x >= frame_x / 2 - 100)){
-		return 0;
+	else if( (y>frame_y/2) && (x>frame_x/3) && (x<frame_x*2/3)){
+		return 2;
 	}
-	else if ((x > frame_x / 2) && (y <= frame_y / 2 + 100) && (y >= frame_y / 2 - 100)) {
+	else if ((x> frame_x*2/3))  {
 		return 1;
 	}
-	else if ((x < frame_x / 2) && (y <= frame_y / 2 + 100) && (y >= frame_y / 2 - 100)) {
+	else if ((x < (frame_x / 3))) {
 		return 3; 
 	}
 	else
 		return -1;
+
+	}
 	
+ /*
+
+	int EyeTracking::direction(float x, float y, int frame_x, int frame_y)
+	{
+
+		if (((x - frame_x) > 0) && ((y - frame_x) > 0)) {
+			return 2;
+		}
+		else if (((x-frame_x)>0)&&((y-frame_x)<0)) {
+			return 0;
+		}
+		else if (((x - frame_x) > 0) && ((y - frame_x) > 0)) {
+			return 1;
+		}
+		else if (((x - frame_x) > 0) && ((y - frame_x) > 0)) {
+			return 3;
+		}
+		else
+			return -1;
 
 	   	  		//return   x = ((y > frame.rows / 2) && (x <= frame.cols / 2 + 100 )&& ( x >= frame.cols / 2 - 100)) ? 3 : 0; 
 	
@@ -119,3 +147,4 @@ int EyeTracking::direction(float x, float y, int frame_x, int frame_y)
 	
 
 	};
+	*/
