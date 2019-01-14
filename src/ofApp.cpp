@@ -29,7 +29,7 @@ void ofApp::draw(){
 	//if (location.y > frame.rows) location.y = frame.rows;
 	//if (location.y < 0) location.y = 0;
 	// ofDrawEllipse(track.locationPoint.x, track.locationPoint.y, 80, 80);
-	visual.direction_visuals(track.direction(track.locationPoint.x, track.locationPoint.y,640, 480),640,480,80);
+	visual.direction_visuals(track.direction(track.locationPoint.x, track.locationPoint.y,640, 480),400,400,80);
 	std::cout << track.direction(track.locationPoint.x, track.locationPoint.y,640,480) << std::endl;
 
 	}

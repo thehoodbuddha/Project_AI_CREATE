@@ -12,13 +12,37 @@ void Visual::direction_visuals(int state, int frame_x, int frame_y, int size) {
 
 	switch (state) {
 	case 0 :{
-			ofDrawTriangle(frame_x/2 - size, frame_y/2 - size , frame_x /2 + size, frame_y /2 - size, frame_x/2, frame_y/2- 2*size);
+			ofSetColor(0,255,0);  // Set the drawing color to white
+			ofDrawTriangle(frame_x/2 - size, frame_y/2 + size , frame_x /2 + size, frame_y /2 + size, frame_x/2, frame_y/2- size);
 			break;
 	};
-	case 1:ofDrawTriangle(300, 180, 200, 220, 330,200);
+	case 1: {
+			ofSetColor(255,0,0);  // Set the drawing color to white
+			ofPushMatrix();
+			ofSetRectMode(OF_RECTMODE_CENTER);
+			ofTranslate(frame_x, 0, 0);
+			ofRotate(90);
+			ofDrawTriangle(frame_x / 2 - size, frame_y / 2 + size, frame_x / 2 + size, frame_y / 2 + size, frame_x / 2, frame_y / 2 - size);
+			ofPopMatrix();
+			break;
+	};
+	case 2: {
+		ofSetColor(255, 0, 255);  // Set the drawing color to white
+		ofDrawTriangle(frame_x / 2 - size, frame_y / 2 - size, frame_x / 2 + size, frame_y / 2 - size, frame_x / 2, frame_y / 2 + size);
+		break;
 
-	case 2:;
-	case 3:;
+
+	};
+	case 3: {
+		ofSetColor(0, 0, 255);  // Set the drawing color to white
+		ofPushMatrix();
+		ofSetRectMode(OF_RECTMODE_CENTER);
+		ofTranslate(0, frame_y, 0);
+		ofRotate(270);
+		ofDrawTriangle(frame_x / 2 - size, frame_y / 2 + size, frame_x / 2 + size, frame_y / 2 + size, frame_x / 2, frame_y / 2 - size);
+		ofPopMatrix();
+		break;
+	};
 
 	};
 }

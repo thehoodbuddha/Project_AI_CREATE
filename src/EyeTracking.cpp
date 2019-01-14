@@ -97,27 +97,23 @@ void EyeTracking::faceDetect(cv::Mat &frame, cv::CascadeClassifier &faceCascade,
 int EyeTracking::direction(float x, float y, int frame_x, int frame_y)
 {
 
-	if ((y > frame_y / 2) && (x <= frame_x / 2 + 150) && (x >= frame_x / 2 - 150)){
-	return 3;
+	if ((y > frame_y / 2) && (x <= frame_x / 2 + 100) && (x >= frame_x / 2 - 100)){
+	return 2;
 	}
-	else if((y < frame_y / 2) && (x <= frame_x / 2 + 150) && (x >= frame_x / 2 - 150)){
+	else if((y < frame_y / 2) && (x <= frame_x / 2 + 100) && (x >= frame_x / 2 - 100)){
 		return 0;
 	}
-	else if ((x > frame_x / 2) && (y <= frame_y / 2 + 150) && (y >= frame_y / 2 - 150)) {
+	else if ((x > frame_x / 2) && (y <= frame_y / 2 + 100) && (y >= frame_y / 2 - 100)) {
 		return 1;
 	}
-	else if ((x < frame_x / 2) && (y <= frame_y / 2 + 150) && (y >= frame_y / 2 - 150)) {
-		return 4; 
+	else if ((x < frame_x / 2) && (y <= frame_y / 2 + 100) && (y >= frame_y / 2 - 100)) {
+		return 3; 
 	}
 	else
 		return -1;
+	
 
-
-
-
-
-
-		//return   x = ((y > frame.rows / 2) && (x <= frame.cols / 2 + 100 )&& ( x >= frame.cols / 2 - 100)) ? 3 : 0; 
+	   	  		//return   x = ((y > frame.rows / 2) && (x <= frame.cols / 2 + 100 )&& ( x >= frame.cols / 2 - 100)) ? 3 : 0; 
 	
 		//return x = (x < frame.rows/2 && y> frame.cols/2) : 
 	
