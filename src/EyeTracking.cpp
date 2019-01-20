@@ -121,30 +121,3 @@ void EyeTracking::faceDetect(cv::Mat &frame, cv::CascadeClassifier &faceCascade,
 
 	}
 	
- /*
-
-	int EyeTracking::direction(float x, float y, int frame_x, int frame_y)
-	{
-
-		if (((x - frame_x) > 0) && ((y - frame_x) > 0)) {
-			return 2;
-		}
-		else if (((x-frame_x)>0)&&((y-frame_x)<0)) {
-			return 0;
-		}
-		else if (((x - frame_x) > 0) && ((y - frame_x) > 0)) {
-			return 1;
-		}
-		else if (((x - frame_x) > 0) && ((y - frame_x) > 0)) {
-			return 3;
-		}
-		else
-			return -1;
-
-	   	  		//return   x = ((y > frame.rows / 2) && (x <= frame.cols / 2 + 100 )&& ( x >= frame.cols / 2 - 100)) ? 3 : 0; 
-	
-		//return x = (x < frame.rows/2 && y> frame.cols/2) : 
-	
-
-	};
-	*/

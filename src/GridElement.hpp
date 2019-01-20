@@ -16,9 +16,10 @@ class GridElement {
   GridElement();
 
   void reset();
+	void setup();
   void resetWalls();
   void resetSearch();
-
+  
   void draw() const;
   void drawWall(Direction) const;
   void setWall(Direction, bool);
@@ -65,6 +66,8 @@ class GridElement {
   int path_length;
   int distance;
   int score;
+
+  //ofImage img; 
 };
 
 #endif /* GridElement_hpp */

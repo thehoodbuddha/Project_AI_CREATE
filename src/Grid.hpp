@@ -12,7 +12,7 @@
 #include "GridElement.hpp"
 #include "constants.h"
 #include "ofMain.h"
-#define N_WALLS_TO_BE_REMOVED 100
+#define N_WALLS_TO_BE_REMOVED 150
 
 class Grid : public ofThread{
   public:

@@ -19,10 +19,14 @@ GridElement::GridElement() {
   for (int direction = 0; direction < N_DIRECTIONS; direction++) {
     neighbours[direction] = nullptr;
   }
+ 
 
   reset();
+}/* void GridElement::setup() {
+	ofImage img;
+	img.loadImage("pac.png");
 }
-
+*/
 void GridElement::reset() {
   resetWalls();
   resetSearch();
@@ -54,7 +58,7 @@ void GridElement::draw() const {
   // draw circle if marked
   if (marked) {
     
-	  ofSetColor(255, 0, 0);
+	 ofSetColor(255, 0, 0);
     ofDrawEllipse((x + 0.5) * GRID_ELEMENT_WIDTH,
                   (y + 0.5) * GRID_ELEMENT_HEIGHT, GRID_ELEMENT_WIDTH * 0.5,
                   GRID_ELEMENT_HEIGHT * 0.5);
@@ -65,9 +69,13 @@ void GridElement::draw() const {
   // draw where pacman is
   if (pacmanVisited) {
 	  ofSetColor(255, 0, 0);
-	  ofDrawEllipse((x + 0.5) * GRID_ELEMENT_WIDTH,
+	   ofDrawEllipse((x + 0.5) * GRID_ELEMENT_WIDTH,
 		  (y + 0.5) * GRID_ELEMENT_HEIGHT, GRID_ELEMENT_WIDTH * 0.5,
 		  GRID_ELEMENT_HEIGHT * 0.5);
+		  
+	 // img.draw((x + 0.5) * GRID_ELEMENT_WIDTH,
+		//  (y + 0.5) * GRID_ELEMENT_HEIGHT, GRID_ELEMENT_WIDTH * 0.5,
+	//	  GRID_ELEMENT_HEIGHT * 0.5);
   }
 
 
