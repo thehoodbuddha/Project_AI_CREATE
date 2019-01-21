@@ -18,12 +18,12 @@ EyeTracking::EyeTracking() {
 };
 
 int EyeTracking::Load_Data() {
-	if (!faceCascade.load("C:\\Users\\JP\\Documents\\of_v0.10.0_vs2017_release\\apps\\myApps\\newProject\\src\\haarcascade_frontalface_default.xml"))
+	if (!faceCascade.load("C:\\Users\\ozenan\\Documents\\Create\\AI\\of_v0.10.0_vs2017_release\\of_v0.10.0_vs2017_release\\apps\\myApps\\Project_AI_CREATE\\src\\haarcascade_frontalface_default.xml"))
 	{
 		std::cerr << "Could not load face detector." << std::endl;
 		return -1;
 	}
-	if (!eyeCascade.load("C:\\Users\\JP\\Documents\\of_v0.10.0_vs2017_release\\apps\\myApps\\newProject\\src\\haarcascade_eye.xml"))
+	if (!eyeCascade.load("C:\\Users\\ozenan\\Documents\\Create\\AI\\of_v0.10.0_vs2017_release\\of_v0.10.0_vs2017_release\\apps\\myApps\\Project_AI_CREATE\\src\\haarcascade_eye.xml"))
 	{
 		std::cerr << "Could not load eye detector." << std::endl;
 		return -1;

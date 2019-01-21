@@ -32,7 +32,7 @@ class Grid : public ofThread{
     GridElement* getStart();
     GridElement* getEnd();
 	GridElement* getPacLocation();
-	GridElement* getGhostLocation();
+	GridElement* getGhostLocation(int);
 
 	void setPointsystem();
 
@@ -48,16 +48,35 @@ class Grid : public ofThread{
     void aStarSearch();
 	void aStarSearchRT();
 
+	void ghostAStarSearch();
+	void ghostGreedySearch();
+
+	void ghostDepthFirstSearch();
+	void ghostDepthFirstSearch(bool);
+
 	void pacMove(Direction nextMove);
 
+	string getGameState();
+	void setGameState(string);
+	void gameSoundLoad(string);
+	void gameSoundPlay();
+	bool gameSoundisPlaying();
+
+	void displayGameOverScreen();
 
   private:
     GridElement grid[GRID_SIZE][GRID_SIZE];
 	ofTimer timer;
 	GridElement* pacLocation;
-	GridElement* ghostLocation;
+	GridElement* ghostLocation[3];
+	enum { astar, greedy, depthfirst };
+
 	GridElement* pointsystemLocation;
 	ScoreSystem score_sys = ScoreSystem(MAX_SCORE);
+
+	string gameState;
+	ofSoundPlayer gameSound;
+	ofTrueTypeFont gameText;
 };
 
 #endif /* Grid_hpp */

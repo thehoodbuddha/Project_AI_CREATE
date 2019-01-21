@@ -5,6 +5,8 @@
 #include "ofApp.h"
 #include <thread>
 //--------------------------------------------------------------
+GridElement* pacStartLocation;
+
 void ofApp::setup(){
 	std::thread t(&EyeTracking::Eyetrack_Main, &track);
 	t.detach();
@@ -15,6 +17,9 @@ void ofApp::setup(){
 
 	grid.generateMaze();
 	grid.setPointsystem();
+
+	pacStartLocation = grid.getPacLocation();
+
 }
 
 //--------------------------------------------------------------
@@ -24,8 +29,48 @@ void ofApp::update(){
 	//threadfunction();
 	//track * taskPtr= new EyeTracking();
 	//EyeTracking x; 
-	
-	
+	if (grid.getGameState() == "not_started")
+	{
+		GridElement* currentPacLocation = grid.getPacLocation();
+		//check if pacman started to move
+		if (currentPacLocation->getX() != pacStartLocation->getX() ||
+			currentPacLocation->getY() != pacStartLocation->getY())
+			grid.setGameState("started");
+	}
+
+	else if (grid.getGameState() == "started")
+	{
+		grid.resetSearch();
+		grid.ghostAStarSearch();
+		grid.resetSearch();
+		grid.ghostGreedySearch();
+		grid.resetSearch();
+		grid.ghostDepthFirstSearch();
+		//check if the game has ended
+		//TODO this can be done better
+		//this whole procedure can be just a collision check function
+
+		for (int i = 0; i < 3; i++)
+		{
+			GridElement* currentGhostLocation = grid.getGhostLocation(i);
+			GridElement* currentPacLocation = grid.getPacLocation();
+			if (currentGhostLocation->getX() == currentPacLocation->getX() &&
+				currentGhostLocation->getY() == currentPacLocation->getY())
+				grid.setGameState("ended");
+		}
+
+	}
+	else if (grid.getGameState() == "ended")
+	{
+		if (!grid.gameSoundisPlaying())
+		{
+			grid.gameSoundLoad("lol-youdied.mp3");
+			grid.gameSoundPlay();
+		}
+		ofBackground(255);
+
+	}
+
 }
 
 //--------------------------------------------------------------
@@ -33,17 +78,10 @@ void ofApp::draw(){
 	//ofBackground(0);  // Clear the screen with a black color
 	//ofSetColor(255);  // Set the drawing color to white
 	//std::cout << "faka" << std::endl;
-	grid.draw();
-	
-	//std:thread t1(&track:Eyetracking_Main,this, "new");
-	
-	//if (location.y > frame.rows) location.y = frame.rows;
-	//if (location.y < 0) location.y = 0;
-	// ofDrawEllipse(track.locationPoint.x, track.locationPoint.y, 80, 80);
-	//visual.direction_visuals(track.direction(track.locationPoint.x, track.locationPoint.y,640, 480),400,400,80);
-	//std::cout << track.direction(track.locationPoint.x, track.locationPoint.y,WEBCAM_WIDTH,WEBCAM_HEIGHT) << std::endl;
-
-	switch(track.direction(track.locationPoint.x, track.locationPoint.y,WEBCAM_WIDTH, WEBCAM_HEIGHT)) {
+	if (grid.getGameState() != "ended")
+	{
+		grid.draw();
+		switch (track.direction(track.locationPoint.x, track.locationPoint.y, WEBCAM_WIDTH, WEBCAM_HEIGHT)) {
 		case 3:
 			grid.pacMove(DirectionWest);
 			break;
@@ -56,8 +94,16 @@ void ofApp::draw(){
 		case 2:
 			grid.pacMove(DirectionSouth);
 			break;
+		}
 	}
+
+	else //game has ended
+	{
+
+		grid.displayGameOverScreen();
+
 	}
+}
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key) {

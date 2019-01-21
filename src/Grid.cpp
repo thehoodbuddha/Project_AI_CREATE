@@ -44,9 +44,19 @@ Grid::Grid() {
 
 
  
+
   pacLocation = &grid[0][0];
   pacLocation->pacmanVisit();
-  ghostLocation = getEnd();
+  ghostLocation[astar] = &grid[GRID_SIZE - 1][GRID_SIZE - 1];
+  ghostLocation[greedy] = &grid[0][GRID_SIZE - 1];
+  ghostLocation[depthfirst] = &grid[GRID_SIZE - 1][0];
+
+
+  gameState = "not_started";
+
+  gameText.load("verdana.ttf", 14);
+  gameText.setLineHeight(18.0f);
+  gameText.setLetterSpacing(1.037);
 }
 
 void Grid::reset() {
@@ -80,11 +90,22 @@ void Grid::setPointsystem() {//int amountofpoints) {                    //genera
 
 void Grid::resetSearch() {
   // reset all elements
-  for (int y = 0; y < GRID_SIZE; y++) {
-    for (int x = 0; x < GRID_SIZE; x++) {
-      grid[x][y].resetSearch();
-    }
-  }
+	for (int y = 0; y < GRID_SIZE; y++) {
+		for (int x = 0; x < GRID_SIZE; x++) {
+			grid[x][y].resetSearch();
+		}
+	}
+	int x = getGhostLocation(astar)->getX();
+	int y = getGhostLocation(astar)->getY();
+	grid[x][y].mark();
+	x = getGhostLocation(greedy)->getX();
+	y = getGhostLocation(greedy)->getY();
+	grid[x][y].mark();
+	x = getGhostLocation(depthfirst)->getX();
+	y = getGhostLocation(depthfirst)->getY();
+	grid[x][y].mark();
+
+
 }
 
 void Grid::draw() {
@@ -177,7 +198,7 @@ GridElement* Grid::getEnd() { return &grid[GRID_SIZE - 1][GRID_SIZE - 1]; }
 
 GridElement* Grid::getPacLocation() { return pacLocation; }
 
-GridElement* Grid::getGhostLocation() { return ghostLocation; }
+GridElement* Grid::getGhostLocation(int ghostType) { return ghostLocation[ghostType]; }
 
 
 void Grid::pacMove(Direction nextMove) {
@@ -187,9 +208,7 @@ void Grid::pacMove(Direction nextMove) {
 		pacLocation = pacLocation->getNeighbour((Direction)nextMove);
 		pacLocation->pacmanVisit();
 		pointsystemLocation = pacLocation;
-		//pacLocation = &grid[x][y];
-		//pacLocation->pacmanVisit();
-		ghostLocation = getEnd();
+	
 		if (pointsystemLocation->get_hasPoint() == pacLocation->pacmanHasVisted()) {
 			pointsystemLocation->deletePoint();
 			score_sys.Score_add(pointsystemLocation->get_hasPointWeight());
@@ -198,5 +217,22 @@ void Grid::pacMove(Direction nextMove) {
 		}
 	}
 }
-		
+
+string Grid::getGameState() { return gameState; }
+
+void Grid::setGameState(string newGameState) { gameState = newGameState; }
+
+void Grid::gameSoundLoad(string soundFileName) {
+	gameSound.load("sounds/" + soundFileName);
+	gameSound.setVolume(1.0f);
+	gameSound.setLoop(true);
+}
+void Grid::gameSoundPlay() { gameSound.play(); }
+
+bool Grid::gameSoundisPlaying() { return gameSound.isPlaying(); }
+
+void Grid::displayGameOverScreen() {
+	gameText.drawString("lol you died", 100, 100);
+
+}
 

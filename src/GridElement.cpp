@@ -34,6 +34,8 @@ GridElement::GridElement() {
 void GridElement::reset() {
   resetWalls();
   resetSearch();
+  haspoint = false;
+
 }
 
 void GridElement::resetWalls() {
@@ -49,7 +51,6 @@ void GridElement::resetSearch() {
   parent = nullptr;
   path_length = -1;
   distance = -1;
-  haspoint = false;
 }
 void GridElement::setPoint(int weight) {
 	haspoint = true;
@@ -62,12 +63,13 @@ void GridElement::deletePoint() {
 
 void GridElement::draw(){
 	// draw background if visited
+	/*
 	if (visited) {
 		ofSetColor(200);
 		ofDrawRectangle(x * GRID_ELEMENT_WIDTH, y * GRID_ELEMENT_HEIGHT,
 			GRID_ELEMENT_WIDTH, GRID_ELEMENT_HEIGHT);
 	}
-
+	*/
 	// draw circle if marked
 	if (marked) {
 
@@ -90,6 +92,7 @@ void GridElement::draw(){
 	// img.draw((x + 0.5) * GRID_ELEMENT_WIDTH,
 	   //  (y + 0.5) * GRID_ELEMENT_HEIGHT, GRID_ELEMENT_WIDTH * 0.5,
    //	  GRID_ELEMENT_HEIGHT * 0.5);
+	
 	if (haspoint) {
 		
 		fade_inital += fade_amount;
