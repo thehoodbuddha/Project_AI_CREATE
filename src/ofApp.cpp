@@ -14,7 +14,7 @@ void ofApp::setup(){
 	std::srand((unsigned int)std::time(0));
 
 	grid.generateMaze();
-
+	grid.setPointsystem();
 }
 
 //--------------------------------------------------------------
@@ -41,7 +41,7 @@ void ofApp::draw(){
 	//if (location.y < 0) location.y = 0;
 	// ofDrawEllipse(track.locationPoint.x, track.locationPoint.y, 80, 80);
 	//visual.direction_visuals(track.direction(track.locationPoint.x, track.locationPoint.y,640, 480),400,400,80);
-	std::cout << track.direction(track.locationPoint.x, track.locationPoint.y,WEBCAM_WIDTH,WEBCAM_HEIGHT) << std::endl;
+	//std::cout << track.direction(track.locationPoint.x, track.locationPoint.y,WEBCAM_WIDTH,WEBCAM_HEIGHT) << std::endl;
 
 	switch(track.direction(track.locationPoint.x, track.locationPoint.y,WEBCAM_WIDTH, WEBCAM_HEIGHT)) {
 		case 3:

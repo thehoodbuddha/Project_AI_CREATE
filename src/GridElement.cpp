@@ -16,8 +16,12 @@
 
 GridElement::GridElement() {
   // reset all neighbours
+	fade_amount = 10;
+	fade_inital = 80;
+
   for (int direction = 0; direction < N_DIRECTIONS; direction++) {
     neighbours[direction] = nullptr;
+	
   }
  
 
@@ -45,40 +49,88 @@ void GridElement::resetSearch() {
   parent = nullptr;
   path_length = -1;
   distance = -1;
+  haspoint = false;
+}
+void GridElement::setPoint(int weight) {
+	haspoint = true;
+	score_weight = weight;
+}
+void GridElement::deletePoint() {
+	haspoint = false;
 }
 
-void GridElement::draw() const {
-  // draw background if visited
-  if (visited) {
-    ofSetColor(200);
-    ofDrawRectangle(x * GRID_ELEMENT_WIDTH, y * GRID_ELEMENT_HEIGHT,
-                    GRID_ELEMENT_WIDTH, GRID_ELEMENT_HEIGHT);
-  }
 
-  // draw circle if marked
-  if (marked) {
-    
-	 ofSetColor(255, 0, 0);
-    ofDrawEllipse((x + 0.5) * GRID_ELEMENT_WIDTH,
-                  (y + 0.5) * GRID_ELEMENT_HEIGHT, GRID_ELEMENT_WIDTH * 0.5,
-                  GRID_ELEMENT_HEIGHT * 0.5);
-	  //ofSetColor(0);
-	  //ofDrawBitmapString(score, (x + 0.5) * GRID_ELEMENT_WIDTH, (y + 0.5) * GRID_ELEMENT_HEIGHT);
-  }
+void GridElement::draw(){
+	// draw background if visited
+	if (visited) {
+		ofSetColor(200);
+		ofDrawRectangle(x * GRID_ELEMENT_WIDTH, y * GRID_ELEMENT_HEIGHT,
+			GRID_ELEMENT_WIDTH, GRID_ELEMENT_HEIGHT);
+	}
 
-  // draw where pacman is
-  if (pacmanVisited) {
-	  ofSetColor(255, 0, 0);
-	   ofDrawEllipse((x + 0.5) * GRID_ELEMENT_WIDTH,
-		  (y + 0.5) * GRID_ELEMENT_HEIGHT, GRID_ELEMENT_WIDTH * 0.5,
-		  GRID_ELEMENT_HEIGHT * 0.5);
-		  
-	 // img.draw((x + 0.5) * GRID_ELEMENT_WIDTH,
-		//  (y + 0.5) * GRID_ELEMENT_HEIGHT, GRID_ELEMENT_WIDTH * 0.5,
-	//	  GRID_ELEMENT_HEIGHT * 0.5);
-  }
+	// draw circle if marked
+	if (marked) {
+
+		ofSetColor(255, 0, 0);
+		ofDrawEllipse((x + 0.5) * GRID_ELEMENT_WIDTH,
+			(y + 0.5) * GRID_ELEMENT_HEIGHT, GRID_ELEMENT_WIDTH * 0.5,
+			GRID_ELEMENT_HEIGHT * 0.5);
+		//ofSetColor(0);
+		//ofDrawBitmapString(score, (x + 0.5) * GRID_ELEMENT_WIDTH, (y + 0.5) * GRID_ELEMENT_HEIGHT);
+	}
+
+	// draw where pacman is
+	if (pacmanVisited) {
+		ofSetColor(255, 0, 0);
+		ofDrawEllipse((x + 0.5) * GRID_ELEMENT_WIDTH,
+			(y + 0.5) * GRID_ELEMENT_HEIGHT, GRID_ELEMENT_WIDTH * 0.5,
+			GRID_ELEMENT_HEIGHT * 0.5);
+
+	}
+	// img.draw((x + 0.5) * GRID_ELEMENT_WIDTH,
+	   //  (y + 0.5) * GRID_ELEMENT_HEIGHT, GRID_ELEMENT_WIDTH * 0.5,
+   //	  GRID_ELEMENT_HEIGHT * 0.5);
+	if (haspoint) {
+		
+		fade_inital += fade_amount;
+		if (fade_inital >= 100 || fade_inital <=10) {
+			fade_amount = -fade_amount;
+		}
+		
+	
+		//std::cout << fade_inital << std::endl;
+
+		switch (score_weight) {
+		case 1: ofSetColor(102, 255, 51,fade_inital);
+			ofDrawEllipse((x + 0.5) * GRID_ELEMENT_WIDTH,
+				(y + 0.5) * GRID_ELEMENT_HEIGHT, GRID_ELEMENT_WIDTH * 0.5,
+				GRID_ELEMENT_HEIGHT * 0.5);
+				break;
+		case 2: 
+			ofSetColor(255, 0, 255,fade_inital);
+			ofDrawEllipse((x + 0.5) * GRID_ELEMENT_WIDTH,
+				(y + 0.5) * GRID_ELEMENT_HEIGHT, GRID_ELEMENT_WIDTH * 0.5,
+				GRID_ELEMENT_HEIGHT * 0.5);
+				break;
+		case 3:
+			ofSetColor(0, 255, 255,fade_inital);
+			ofDrawEllipse((x + 0.5) * GRID_ELEMENT_WIDTH,
+				(y + 0.5) * GRID_ELEMENT_HEIGHT, GRID_ELEMENT_WIDTH * 0.5,
+				GRID_ELEMENT_HEIGHT * 0.5);
+			break;
+
+		case 4:
+			ofSetColor(255, 204, 0,fade_inital);
+			ofDrawEllipse((x + 0.5) * GRID_ELEMENT_WIDTH,
+				(y + 0.5) * GRID_ELEMENT_HEIGHT, GRID_ELEMENT_WIDTH * 0.5,
+				GRID_ELEMENT_HEIGHT * 0.5);
+			break;
 
 
+		}
+		
+	}
+	
   // draw all walls
   for (int direction = 0; direction < N_DIRECTIONS; direction++) {
     if (walls[direction]) {
@@ -134,10 +186,13 @@ int GridElement::getX() const { return x; }
 
 int GridElement::getY() const { return y; }
 
+bool GridElement::get_hasPoint() { return haspoint; }
+
 void GridElement::setCoordinate(int x, int y) {
   this->x = x;
   this->y = y;
 }
+
 
 bool GridElement::hasNeighbour(Direction direction) const {
   return (neighbours[direction] != NULL);
@@ -155,11 +210,15 @@ int GridElement::manhattanDistance(GridElement const* other) const {
   return (std::abs(x - other->x) + std::abs(y - other->y));
 }
 
+int GridElement::get_hasPointWeight() {return score_weight;}
+
 void GridElement::visit() { visited = true; }
 
 void GridElement::mark() { marked = true; }
 
 void GridElement::pacmanVisit() { pacmanVisited = true; }
+
+bool GridElement::pacmanHasVisted() { return pacmanVisited;  }
 
 void GridElement::pacmanLeave() { pacmanVisited = false; }
 

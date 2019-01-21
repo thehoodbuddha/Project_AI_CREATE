@@ -12,6 +12,8 @@
 #include "GridElement.hpp"
 #include "constants.h"
 #include "ofMain.h"
+#include "ScoreSystem.h"
+
 #define N_WALLS_TO_BE_REMOVED 150
 
 class Grid : public ofThread{
@@ -32,6 +34,7 @@ class Grid : public ofThread{
 	GridElement* getPacLocation();
 	GridElement* getGhostLocation();
 
+	void setPointsystem();
 
     void generateMaze();
     void generateRooms();
@@ -51,9 +54,10 @@ class Grid : public ofThread{
   private:
     GridElement grid[GRID_SIZE][GRID_SIZE];
 	ofTimer timer;
-
 	GridElement* pacLocation;
 	GridElement* ghostLocation;
+	GridElement* pointsystemLocation;
+	ScoreSystem score_sys = ScoreSystem(MAX_SCORE);
 };
 
 #endif /* Grid_hpp */

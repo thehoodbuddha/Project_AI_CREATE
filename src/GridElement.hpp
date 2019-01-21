@@ -16,11 +16,11 @@ class GridElement {
   GridElement();
 
   void reset();
-	void setup();
+  void setup();
   void resetWalls();
   void resetSearch();
   
-  void draw() const;
+  void draw() ;
   void drawWall(Direction) const;
   void setWall(Direction, bool);
   bool hasWall(Direction) const;
@@ -36,7 +36,7 @@ class GridElement {
 
   float neighbourDistance(GridElement const*) const;
   int manhattanDistance(GridElement const*) const;
-
+ 
   void visit();
   void mark();
   void pacmanVisit();
@@ -50,8 +50,17 @@ class GridElement {
   void setDistance(int);
   void setScore(int);
   int getScore();
+
+  void setPoint(int weight);
+  void deletePoint();
+  bool get_hasPoint();
+  int get_hasPointWeight();
+  bool pacmanHasVisted();
+
  private:
   int x, y;
+  float fade_amount;
+  float fade_inital;
 
   GridElement* neighbours[N_DIRECTIONS];
   bool walls[N_DIRECTIONS];
@@ -60,12 +69,15 @@ class GridElement {
   bool visited;
   bool marked;
   bool pacmanVisited;
+  bool haspoint;
+  int score;
 
   GridElement* parent;
 
   int path_length;
   int distance;
-  int score;
+  int score_weight; 
+  
 
   //ofImage img; 
 };

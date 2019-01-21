@@ -42,6 +42,7 @@ Grid::Grid() {
     }
   }
 
+
  
   pacLocation = &grid[0][0];
   pacLocation->pacmanVisit();
@@ -57,6 +58,26 @@ void Grid::reset() {
   }
 }
 
+void Grid::setPointsystem() {//int amountofpoints) {                    //generates a randompoint system in the grid. 
+	//RAND_MAX = 20;
+
+		//std::cout << (std::rand() % 100 + 1) << std::endl;
+	for (int y = 0; y < GRID_SIZE; y++) {
+		for (int x = 0; x < GRID_SIZE; x++) {
+			if ((std::rand() & 2 + 0) > 1) {
+				//grid[x][y].setPoint();
+				std::cout << "check" << std::endl;
+				pointsystemLocation = &grid[x][y];
+				int x = std::rand() % 4 + 1;
+				pointsystemLocation->setPoint(x);
+				//ghostLocation = getEnd();
+				//std::cout << x << std::endl;
+			}
+		}
+	}
+}
+
+
 void Grid::resetSearch() {
   // reset all elements
   for (int y = 0; y < GRID_SIZE; y++) {
@@ -71,6 +92,7 @@ void Grid::draw() {
 	for (int y = 0; y < GRID_SIZE; y++) {
 		for (int x = 0; x < GRID_SIZE; x++) {
 			grid[x][y].draw();
+			//pointsystemLocation->draw();
 		}
 	}
 }
@@ -159,9 +181,22 @@ GridElement* Grid::getGhostLocation() { return ghostLocation; }
 
 
 void Grid::pacMove(Direction nextMove) {
+	
 	if (!pacLocation->hasWall((Direction)nextMove)) {
 		pacLocation->pacmanLeave();
 		pacLocation = pacLocation->getNeighbour((Direction)nextMove);
 		pacLocation->pacmanVisit();
+		pointsystemLocation = pacLocation;
+		//pacLocation = &grid[x][y];
+		//pacLocation->pacmanVisit();
+		ghostLocation = getEnd();
+		if (pointsystemLocation->get_hasPoint() == pacLocation->pacmanHasVisted()) {
+			pointsystemLocation->deletePoint();
+			score_sys.Score_add(pointsystemLocation->get_hasPointWeight());
+
+				std::cout << "score" << score_sys.Score_return() << std::endl;
+		}
 	}
 }
+		
+

@@ -72,7 +72,9 @@ void EyeTracking::faceDetect(cv::Mat &frame, cv::CascadeClassifier &faceCascade,
 {
 	
 	cv::Mat grayscale;
-	cv::cvtColor(frame, grayscale, cv::COLOR_RGB2GRAY); // convert image to grayscale
+	cv::Mat frame_mirrored = frame;
+	cv::flip(frame_mirrored,frame_mirrored,1);
+	cv::cvtColor(frame_mirrored, grayscale, cv::COLOR_RGB2GRAY); // convert image to grayscale
 	//cv::equalizeHist(grayscale, grayscale); // enhance image contrast 
 	std::vector<cv::Rect> faces;
 	std::vector<cv::Rect> eyes;
@@ -91,13 +93,13 @@ void EyeTracking::faceDetect(cv::Mat &frame, cv::CascadeClassifier &faceCascade,
 	if (eyes.size() != 2) return; // both eyes were not detected
 	for (cv::Rect &eye : eyes)
 	{
-		rectangle(frame, faces[0].tl() + eye.tl(), faces[0].tl() + eye.br(), cv::Scalar(0, 255, 0), 3);
+		rectangle(frame_mirrored, faces[0].tl() + eye.tl(), faces[0].tl() + eye.br(), cv::Scalar(0, 255, 0), 3);
 	}
 
 	locationPoint.x = faces[0].x+( faces[0].br().x - faces[0].x )/2;
 	locationPoint.y = faces[0].y + (faces[0].br().y - faces[0].y) / 2;
 	//rectangle(frame, locationPoint.x, locationPoint.y, cv::Scalar(255, 0, 0), 2);
-	std::cout <<  locationPoint.x << std::endl;
+	//std::cout <<  locationPoint.x << std::endl;
 	//std::cout << frame.cols << std::endl;
 }	
 
