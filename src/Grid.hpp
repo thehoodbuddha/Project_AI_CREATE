@@ -14,9 +14,7 @@
 #include "ofMain.h"
 #include "ScoreSystem.h"
 
-#include <boost/asio.hpp>
-#include <boost/bind.hpp>
-#include <boost/date_time/posix_time/posix_time.hpp>
+
 
 #define N_WALLS_TO_BE_REMOVED 150
 
@@ -83,6 +81,7 @@ class Grid : public ofThread{
 	ofSoundPlayer gameSound;
 	ofTrueTypeFont gameText;
 
+	
 	
 };
 
