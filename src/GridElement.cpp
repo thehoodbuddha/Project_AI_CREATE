@@ -73,7 +73,7 @@ void GridElement::draw(){
 	// draw circle if marked
 	if (marked) {
 
-		ofSetColor(255, 0, 0);
+		ofSetColor(0, 0, 255);
 		ofDrawEllipse((x + 0.5) * GRID_ELEMENT_WIDTH,
 			(y + 0.5) * GRID_ELEMENT_HEIGHT, GRID_ELEMENT_WIDTH * 0.5,
 			GRID_ELEMENT_HEIGHT * 0.5);
