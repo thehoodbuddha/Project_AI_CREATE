@@ -14,7 +14,7 @@ GridElement* pacStartLocation;
 void ofApp::setup(){
 	std::thread t(&EyeTracking::Eyetrack_Main, &track);
 	t.detach();
-	ofBackground(255, 255, 255);
+	ofBackground(0);
 
 	// init random generator
 	std::srand((unsigned int)std::time(0));
@@ -147,11 +147,9 @@ void ofApp::update(){
 	{
 		if (!grid.gameSoundisPlaying())
 		{
-			//grid.gameSoundLoad("lol-youdied.mp3");
-			//grid.gameSoundPlay();
+			grid.gameSoundLoad("lol-youdied.mp3");
+			grid.gameSoundPlay();
 		}
-		ofBackground(255);
-
 	}
 
 	/*

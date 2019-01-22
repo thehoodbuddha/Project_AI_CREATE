@@ -54,7 +54,7 @@ Grid::Grid() {
 
   gameState = "not_started";
 
-  gameText.load("ARCADECLASSIC.TTF", 14);
+  gameText.load("ARCADECLASSIC.TTF", 28);
   gameText.setLineHeight(18.0f);
   gameText.setLetterSpacing(1.037);
   score_system = new ScoreSystem(10);
@@ -124,7 +124,6 @@ void Grid::draw() {
 		for (int x = 0; x < GRID_SIZE; x++) {
 			grid[x][y].draw();
 			//pointsystemLocation->draw();
-			std::cout << score_system->get_maxScore()<< std::endl;
 		}
 	}
 }
@@ -251,18 +250,23 @@ void Grid::displayGameOverScreen() {
 
 	int size_x = gameText.stringWidth(END_GAME);
 	gameText.drawString(END_GAME, WINDOW_WIDTH / 2 - size_x / 2, WINDOW_HEIGHT / 2);
+	string end_score = to_string(score_system->Score_return());
+	end_score = end_score + "out of" + to_string(score_system->get_maxScore());
+	int size_y = gameText.stringHeight(end_score);
+	gameText.drawString(end_score, WINDOW_WIDTH / 2 - size_x / 2, WINDOW_HEIGHT / 2 + size_y * 2);
+
 }
 
 void Grid::displayGameSplashScreen(){
 	ofSetColor(255);
 	int size_x, size_y;
-	string splashMessage = "Coke from Cock";
+	string splashMessage = "Use your head Nerd literally";
 	size_x = gameText.stringWidth(splashMessage);
 	gameText.drawString(splashMessage, WINDOW_WIDTH / 2 - size_x / 2, WINDOW_HEIGHT / 2);
-	splashMessage = "Can't have enough JP";
+	splashMessage = "A game by Anil and JP";
 	size_x = gameText.stringWidth(splashMessage);
 	size_y = gameText.stringHeight(splashMessage);
-	gameText.drawString(splashMessage, WINDOW_WIDTH / 2 - size_x / 2, WINDOW_HEIGHT / 2 + size_y);
+	gameText.drawString(splashMessage, WINDOW_WIDTH / 2 - size_x / 2, WINDOW_HEIGHT / 2 + 2 * size_y);
 
 
 }

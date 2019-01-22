@@ -143,7 +143,7 @@ void GridElement::draw(){
 }
 
 void GridElement::drawWall(Direction direction) const {
-  ofSetColor(0);
+  ofSetColor(33, 33, 222);
 
   switch (direction) {
     case DirectionNorth:
