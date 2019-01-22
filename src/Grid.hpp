@@ -14,6 +14,10 @@
 #include "ofMain.h"
 #include "ScoreSystem.h"
 
+#include <boost/asio.hpp>
+#include <boost/bind.hpp>
+#include <boost/date_time/posix_time/posix_time.hpp>
+
 #define N_WALLS_TO_BE_REMOVED 150
 
 class Grid : public ofThread{
@@ -54,7 +58,7 @@ class Grid : public ofThread{
 	void ghostDepthFirstSearch();
 	void ghostDepthFirstSearch(bool);
 
-	void pacMove(Direction nextMove);
+	bool pacMove(Direction nextMove);
 
 	string getGameState();
 	void setGameState(string);
@@ -63,6 +67,7 @@ class Grid : public ofThread{
 	bool gameSoundisPlaying();
 
 	void displayGameOverScreen();
+
 
   private:
     GridElement grid[GRID_SIZE][GRID_SIZE];
@@ -77,6 +82,8 @@ class Grid : public ofThread{
 	string gameState;
 	ofSoundPlayer gameSound;
 	ofTrueTypeFont gameText;
+
+	
 };
 
 #endif /* Grid_hpp */

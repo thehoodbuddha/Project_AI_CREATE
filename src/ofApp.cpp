@@ -4,8 +4,14 @@
 
 #include "ofApp.h"
 #include <thread>
+#include <boost/asio.hpp>
+#include <boost/bind.hpp>
+#include <boost/date_time/posix_time/posix_time.hpp>
 //--------------------------------------------------------------
 GridElement* pacStartLocation;
+
+
+
 
 void ofApp::setup(){
 	std::thread t(&EyeTracking::Eyetrack_Main, &track);
@@ -20,15 +26,68 @@ void ofApp::setup(){
 
 	pacStartLocation = grid.getPacLocation();
 
+	previous = 0;
+
+
+//	boost::asio::io_service io;
+
+//	boost::asio::deadline_timer timer(io, boost::posix_time::seconds(2));
+	
+	//timer.async_wait(boost::bind(&Grid::ghostAStarSearch, &grid));
+//	grid.timerTest();
+//	timer.async_wait(boost::bind(&Grid::timerTest, this));
+	//&CFoo::bar, &foo
+	//&bar::foo, bar()
+	
+
+
+	
+
+
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
-	//auto threadfunction = track.Eyetrack_Main;
+	
+	namespace sc = std::chrono;
 
-	//threadfunction();
-	//track * taskPtr= new EyeTracking();
-	//EyeTracking x; 
+	auto time = sc::system_clock::now(); // get the current time
+
+	auto since_epoch = time.time_since_epoch(); // get the duration since epoch
+
+	auto millis = sc::duration_cast<sc::seconds>(since_epoch);
+	//std::cout << millis.count() << std::endl;
+	//unsigned long int  test = millis.count(); 
+	//std::cout << test << std::endl;
+
+	int track_result = track.direction(track.locationPoint.x, track.locationPoint.y, WEBCAM_WIDTH, WEBCAM_HEIGHT);
+	
+	if (grid.getGameState() == "not_started")
+	{
+		switch (track_result) {
+		case 3:
+			if (grid.pacMove(DirectionWest)) 
+				grid.setGameState("started");
+			break;
+		case 1:
+			if (grid.pacMove(DirectionEast)) 
+				grid.setGameState("started");
+			break;
+		case 0:
+			if (grid.pacMove(DirectionNorth))
+				grid.setGameState("started");
+			break;
+		case 2:
+			if (grid.pacMove(DirectionSouth))
+				grid.setGameState("started");
+			break;
+
+		}
+
+	}
+		
+
+	/*
 	if (grid.getGameState() == "not_started")
 	{
 		GridElement* currentPacLocation = grid.getPacLocation();
@@ -37,7 +96,68 @@ void ofApp::update(){
 			currentPacLocation->getY() != pacStartLocation->getY())
 			grid.setGameState("started");
 	}
+	*/
+	if (grid.getGameState() == "started")
+	{
+		
+		if (millis.count() - previous >= 1) {
+			previous = millis.count();
+			grid.resetSearch();
+			grid.ghostAStarSearch();
+			grid.resetSearch();
+			grid.ghostGreedySearch();
+			grid.resetSearch();
+			grid.ghostDepthFirstSearch();
 
+			
+
+			for (int i = 0; i < 3; i++)
+			{
+				GridElement* currentGhostLocation = grid.getGhostLocation(i);
+				GridElement* currentPacLocation = grid.getPacLocation();
+				if (currentGhostLocation->getX() == currentPacLocation->getX() &&
+					currentGhostLocation->getY() == currentPacLocation->getY())
+					grid.setGameState("ended");
+			}
+
+			switch (track_result) {
+				case 3:
+					grid.pacMove(DirectionWest);
+					break;
+				case 1:
+					grid.pacMove(DirectionEast);
+					break;
+				case 0:
+					grid.pacMove(DirectionNorth);
+					break;
+				case 2:
+					grid.pacMove(DirectionSouth);
+					break;
+
+			}
+			
+
+
+
+		}
+		
+
+
+	}
+	else if (grid.getGameState() == "ended")
+	{
+		if (!grid.gameSoundisPlaying())
+		{
+			grid.gameSoundLoad("lol-youdied.mp3");
+			grid.gameSoundPlay();
+		}
+		ofBackground(255);
+
+	}
+
+	/*
+	
+	
 	else if (grid.getGameState() == "started")
 	{
 		grid.resetSearch();
@@ -70,7 +190,7 @@ void ofApp::update(){
 		ofBackground(255);
 
 	}
-
+	*/
 }
 
 //--------------------------------------------------------------
@@ -78,26 +198,28 @@ void ofApp::draw(){
 	//ofBackground(0);  // Clear the screen with a black color
 	//ofSetColor(255);  // Set the drawing color to white
 	//std::cout << "faka" << std::endl;
+	grid.draw();
+	/*
 	if (grid.getGameState() != "ended")
 	{
-		grid.draw();
 		switch (track.direction(track.locationPoint.x, track.locationPoint.y, WEBCAM_WIDTH, WEBCAM_HEIGHT)) {
-		case 3:
-			grid.pacMove(DirectionWest);
-			break;
-		case 1:
-			grid.pacMove(DirectionEast);
-			break;
-		case 0:
-			grid.pacMove(DirectionNorth);
-			break;
-		case 2:
-			grid.pacMove(DirectionSouth);
-			break;
+			case 3:
+				grid.pacMove(DirectionWest);
+				break;
+			case 1:
+				grid.pacMove(DirectionEast);
+				break;
+			case 0:
+				grid.pacMove(DirectionNorth);
+				break;
+			case 2:
+				grid.pacMove(DirectionSouth);
+				break;
 		}
+		
 	}
-
-	else //game has ended
+	*/
+	if (grid.getGameState() == "ended") //game has ended
 	{
 
 		grid.displayGameOverScreen();

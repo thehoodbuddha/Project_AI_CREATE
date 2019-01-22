@@ -57,6 +57,9 @@ Grid::Grid() {
   gameText.load("verdana.ttf", 14);
   gameText.setLineHeight(18.0f);
   gameText.setLetterSpacing(1.037);
+
+
+
 }
 
 void Grid::reset() {
@@ -76,7 +79,6 @@ void Grid::setPointsystem() {//int amountofpoints) {                    //genera
 		for (int x = 0; x < GRID_SIZE; x++) {
 			if ((std::rand() & 2 + 0) > 1) {
 				//grid[x][y].setPoint();
-				std::cout << "check" << std::endl;
 				pointsystemLocation = &grid[x][y];
 				int x = std::rand() % 4 + 1;
 				pointsystemLocation->setPoint(x);
@@ -201,21 +203,26 @@ GridElement* Grid::getPacLocation() { return pacLocation; }
 GridElement* Grid::getGhostLocation(int ghostType) { return ghostLocation[ghostType]; }
 
 
-void Grid::pacMove(Direction nextMove) {
+bool Grid::pacMove(Direction nextMove) {
 	
 	if (!pacLocation->hasWall((Direction)nextMove)) {
 		pacLocation->pacmanLeave();
 		pacLocation = pacLocation->getNeighbour((Direction)nextMove);
 		pacLocation->pacmanVisit();
 		pointsystemLocation = pacLocation;
-	
+
 		if (pointsystemLocation->get_hasPoint() == pacLocation->pacmanHasVisted()) {
 			pointsystemLocation->deletePoint();
 			score_sys.Score_add(pointsystemLocation->get_hasPointWeight());
 
-				std::cout << "score" << score_sys.Score_return() << std::endl;
+			std::cout << "score" << score_sys.Score_return() << std::endl;
 		}
+		return true;
 	}
+
+	else
+		return false;
+
 }
 
 string Grid::getGameState() { return gameState; }
