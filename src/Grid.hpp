@@ -48,7 +48,6 @@ class Grid : public ofThread{
     void breadthFirstSearch();
     void greedySearch();
     void aStarSearch();
-	void aStarSearchRT();
 
 	void ghostAStarSearch();
 	void ghostGreedySearch();

@@ -25,6 +25,7 @@
 
 
 #define END_GAME "LOL YOU DIED"
+#define WIN_GAME "YOU GOT EM ALL" 
 #define INFOBAR_SIZE 50
 
 #endif /* config_h */

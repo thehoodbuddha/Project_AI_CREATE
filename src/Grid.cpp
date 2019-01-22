@@ -52,14 +52,14 @@ Grid::Grid() {
   ghostLocation[depthfirst] = &grid[GRID_SIZE - 1][0];
 
 
-  gameState = "not_started";
+  gameState = "at_splash";
 
   gameText.load("ARCADECLASSIC.TTF", 28);
   gameText.setLineHeight(18.0f);
   gameText.setLetterSpacing(1.037);
-  score_system = new ScoreSystem(10);
+  score_system = new ScoreSystem(0);
 
-  ghostSprite.load("sprites/red_right.png");
+  //ghostSprite.load("sprites/red_right.png");
 
 }
 
@@ -73,28 +73,27 @@ void Grid::reset() {
 }
 
 void Grid::setPointsystem() {//int amountofpoints) {                    //generates a randompoint system in the grid. 
-	//RAND_MAX = 20;
 
 		//std::cout << (std::rand() % 100 + 1) << std::endl;
 	for (int y = 0; y < GRID_SIZE; y++) {
 		for (int x = 0; x < GRID_SIZE; x++) {
-			if ((std::rand() & 2 + 0) > 1) {
+			if ((std::rand() & 2 + 0) > 1) { //50 percent chance there is a tile with point
 	
 				pointsystemLocation = &grid[x][y];
 				int x = std::rand() % 4 + 1;
 				score_system->add_maxScore(x);                //add to the maxscore system, every iteration. 
 				pointsystemLocation->setPoint(x);             //set a point with a certain score weight. 
 
-				
 			}
 		}
 	}
 }
 
 bool Grid::gamegoal_reached() {
-	 	if (score_system->get_maxScore() == score_system->Score_return()) {
+	if (score_system->get_maxScore() == score_system->Score_return()) {
 		return true;
-	}else{return false; }
+	}else{
+		return false; }
 	
 }
 
@@ -225,8 +224,9 @@ bool Grid::pacMove(Direction nextMove) {
 		if (pointsystemLocation->get_hasPoint() == pacLocation->pacmanHasVisted()) {
 			pointsystemLocation->deletePoint();
 			score_system->Score_add(pointsystemLocation->get_hasPointWeight());
-
-			//std::cout << "score" << score_sys.Score_return() << std::endl;
+			if (gamegoal_reached()) {
+				setGameState("ended");
+			}
 		}
 		return true;
 	}
@@ -250,12 +250,21 @@ void Grid::gameSoundPlay() { gameSound.play(); }
 bool Grid::gameSoundisPlaying() { return gameSound.isPlaying(); }
 
 void Grid::displayGameOverScreen() {
-
-	int size_x = gameText.stringWidth(END_GAME);
-	gameText.drawString(END_GAME, WINDOW_WIDTH / 2 - size_x / 2, WINDOW_HEIGHT / 2);
+	int size_x, size_y;
+	if (gamegoal_reached())
+	{
+		size_x = gameText.stringWidth(WIN_GAME);
+		gameText.drawString(WIN_GAME, WINDOW_WIDTH / 2 - size_x / 2, WINDOW_HEIGHT / 2);
+	}
+	else
+	{
+		size_x = gameText.stringWidth(END_GAME);
+		gameText.drawString(END_GAME, WINDOW_WIDTH / 2 - size_x / 2, WINDOW_HEIGHT / 2);
+	}
 	string end_score = to_string(score_system->Score_return());
-	end_score = end_score + " out of " + to_string(score_system->get_maxScore());
-	int size_y = gameText.stringHeight(end_score);
+	end_score = "score is " + end_score + " out of " + to_string(score_system->get_maxScore());
+	size_x = gameText.stringWidth(end_score);
+	size_y = gameText.stringHeight(end_score);
 	gameText.drawString(end_score, WINDOW_WIDTH / 2 - size_x / 2, WINDOW_HEIGHT / 2 + size_y * 2);
 
 }
@@ -263,13 +272,15 @@ void Grid::displayGameOverScreen() {
 void Grid::displayGameSplashScreen(){
 	ofSetColor(255);
 	int size_x, size_y;
-	string splashMessage = "Use your head literally";
+	string splashMessage = "Use your head";
 	size_x = gameText.stringWidth(splashMessage);
 	gameText.drawString(splashMessage, WINDOW_WIDTH / 2 - size_x / 2, WINDOW_HEIGHT / 2);
 	splashMessage = "A game by Anil and JP";
 	size_x = gameText.stringWidth(splashMessage);
 	size_y = gameText.stringHeight(splashMessage);
 	gameText.drawString(splashMessage, WINDOW_WIDTH / 2 - size_x / 2, WINDOW_HEIGHT / 2 + 2 * size_y);
-
+	splashMessage = "Press space to start";
+	size_x = gameText.stringWidth(splashMessage);
+	gameText.drawString(splashMessage, WINDOW_WIDTH / 2 - size_x / 2, WINDOW_HEIGHT / 2 + 4 * size_y);
 
 }

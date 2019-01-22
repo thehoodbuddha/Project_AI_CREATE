@@ -98,9 +98,7 @@ void EyeTracking::faceDetect(cv::Mat &frame, cv::CascadeClassifier &faceCascade,
 
 	locationPoint.x = faces[0].x+( faces[0].br().x - faces[0].x )/2;
 	locationPoint.y = faces[0].y + (faces[0].br().y - faces[0].y) / 2;
-	//rectangle(frame, locationPoint.x, locationPoint.y, cv::Scalar(255, 0, 0), 2);
-	//std::cout <<  locationPoint.x << std::endl;
-	//std::cout << frame.cols << std::endl;
+
 }	
 
  int EyeTracking::direction(float x, float y, int frame_x, int frame_y)
