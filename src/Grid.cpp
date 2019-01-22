@@ -57,7 +57,6 @@ Grid::Grid() {
   gameText.load("ARCADECLASSIC.TTF", 14);
   gameText.setLineHeight(18.0f);
   gameText.setLetterSpacing(1.037);
-  //score_sytem = scoreSystem(10);
   score_system = new ScoreSystem(10);
 
  
@@ -246,7 +245,18 @@ void Grid::displayGameOverScreen() {
 
 	int size_x = gameText.stringWidth(END_GAME);
 	gameText.drawString(END_GAME, WINDOW_WIDTH / 2 - size_x / 2, WINDOW_HEIGHT / 2);
+}
+
+void Grid::displayGameSplashScreen(){
+	ofSetColor(255);
+	int size_x, size_y;
+	string splashMessage = "Coke from Cock";
+	size_x = gameText.stringWidth(splashMessage);
+	gameText.drawString(splashMessage, WINDOW_WIDTH / 2 - size_x / 2, WINDOW_HEIGHT / 2);
+	splashMessage = "Can't have enough JP";
+	size_x = gameText.stringWidth(splashMessage);
+	size_y = gameText.stringHeight(splashMessage);
+	gameText.drawString(splashMessage, WINDOW_WIDTH / 2 - size_x / 2, WINDOW_HEIGHT / 2 + size_y);
 
 
 }
-
