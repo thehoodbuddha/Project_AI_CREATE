@@ -239,7 +239,10 @@ void Grid::gameSoundPlay() { gameSound.play(); }
 bool Grid::gameSoundisPlaying() { return gameSound.isPlaying(); }
 
 void Grid::displayGameOverScreen() {
-	gameText.drawString("lol you died", 100, 100);
+
+	int size_x = gameText.stringWidth(END_GAME);
+	gameText.drawString(END_GAME, WINDOW_WIDTH / 2 - size_x / 2, WINDOW_HEIGHT / 2);
+
 
 }
 
