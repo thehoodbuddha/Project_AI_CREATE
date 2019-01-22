@@ -81,6 +81,7 @@ void Grid::setPointsystem() {//int amountofpoints) {                    //genera
 				//grid[x][y].setPoint();
 				pointsystemLocation = &grid[x][y];
 				int x = std::rand() % 4 + 1;
+				score_system->set_maxScore(2);
 				pointsystemLocation->setPoint(x);
 				//ghostLocation = getEnd();
 				//std::cout << x << std::endl;
@@ -117,6 +118,7 @@ void Grid::draw() {
 		for (int x = 0; x < GRID_SIZE; x++) {
 			grid[x][y].draw();
 			//pointsystemLocation->draw();
+			std::cout << score_system->get_maxScore()<< std::endl;
 		}
 	}
 }

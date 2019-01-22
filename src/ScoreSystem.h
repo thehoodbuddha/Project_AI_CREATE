@@ -6,13 +6,16 @@
 class ScoreSystem
 {
 public:
-	ScoreSystem(int max_score);
+	ScoreSystem(int initial_poins);
 	void Score_add(float add_amount);
-	float Score_return();
+	int Score_return();
 	void Display_Score();
-
+	void set_maxScore(int amount);
+	int get_maxScore();
 private:
-	int maxscore;
+
+	int current_score;
+	int max_score; 
 
 	ofTrueTypeFont bar_info;
 	//ofTrueTypeFont gameText;
