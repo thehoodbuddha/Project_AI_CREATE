@@ -47,7 +47,7 @@ void GridElement::resetWalls() {
 void GridElement::resetSearch() {
   visited = false;
   marked = false;
-  pacmanVisited = false;
+ // pacmanVisited = false;
   parent = nullptr;
   path_length = -1;
   distance = -1;
