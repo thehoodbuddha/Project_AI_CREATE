@@ -23,4 +23,7 @@
 #define GRID_ELEMENT_WIDTH ((float)WINDOW_WIDTH / GRID_SIZE)
 #define GRID_ELEMENT_HEIGHT ((float)WINDOW_HEIGHT / GRID_SIZE)
 
+#define END_GAME "LOL YOU DIED"
+#define FILE_PATHAIRCASCADE "C:\\Users\\JP\\Downloads\\Project_AI_CREATE-master\\Project_AI_CREATE-master\\src\\haarcascade_eye.xml"
+#define FILE_PATHFACEDATA "C:\\Users\\JP\\Downloads\\Project_AI_CREATE-master\\Project_AI_CREATE-master\\src\\haarcascade_frontalface_default.xml"
 #endif /* config_h */
