@@ -3,7 +3,7 @@
 
 //========================================================================
 int main() {
-	ofSetupOpenGL(WINDOW_WIDTH, WINDOW_HEIGHT, OF_WINDOW);			// <-------- setup the GL context
+	ofSetupOpenGL(WINDOW_WIDTH+ INFOBAR_SIZE, WINDOW_HEIGHT, OF_WINDOW);			// <-------- setup the GL context
 	std::cout << "SearchStrategies v" << APP_VERSION_MAJOR << '.'
 		<< APP_VERSION_MINOR << '\n';
 	
