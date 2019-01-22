@@ -18,12 +18,12 @@ EyeTracking::EyeTracking() {
 };
 
 int EyeTracking::Load_Data() {
-	if (!faceCascade.load(FILE_PATHFACEDATA))
+	if (!faceCascade.load("..\\src\\haarcascade_frontalface_default.xml"))
 	{
 		std::cerr << "Could not load face detector." << std::endl;
 		return -1;
 	}
-	if (!eyeCascade.load(FILE_PATHAIRCASCADE))
+	if (!eyeCascade.load("..\\src\\haarcascade_eye.xml"))
 	{
 		std::cerr << "Could not load eye detector." << std::endl;
 		return -1;
