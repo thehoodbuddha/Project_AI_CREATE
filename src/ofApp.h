@@ -26,5 +26,7 @@ class ofApp : public ofBaseApp{
 		EyeTracking track;
 		Visual visual;
 		Grid grid;
-		unsigned long int previous;
+		unsigned long long millisSincePacMoved;
+		unsigned long long millisSinceGhostMoved;
+
 };

@@ -24,8 +24,8 @@ void ofApp::setup(){
 
 	pacStartLocation = grid.getPacLocation();
 
-	previous = 0;
-
+	millisSincePacMoved = 0;
+	millisSinceGhostMoved = 0;
 
 //	boost::asio::io_service io;
 
@@ -53,7 +53,7 @@ void ofApp::update(){
 
 	auto since_epoch = time.time_since_epoch(); // get the duration since epoch
 
-	auto millis = sc::duration_cast<sc::seconds>(since_epoch);
+	auto millis = sc::duration_cast<sc::milliseconds>(since_epoch);
 	//std::cout << millis.count() << std::endl;
 	//unsigned long int  test = millis.count(); 
 	//std::cout << test << std::endl;
@@ -97,9 +97,29 @@ void ofApp::update(){
 	*/
 	if (grid.getGameState() == "started")
 	{
-		
-		if (millis.count() - previous >= 1) {
-			previous = millis.count();
+	
+		if (millis.count() - millisSincePacMoved >= 500)
+		{
+			millisSincePacMoved = millis.count();
+			switch (track_result) {
+			case 3:
+				grid.pacMove(DirectionWest);
+				break;
+			case 1:
+				grid.pacMove(DirectionEast);
+				break;
+			case 0:
+				grid.pacMove(DirectionNorth);
+				break;
+			case 2:
+				grid.pacMove(DirectionSouth);
+				break;
+
+			}
+		}
+
+		if (millis.count() - millisSinceGhostMoved >= 1000) {
+			millisSinceGhostMoved = millis.count();
 			grid.resetSearch();
 			grid.ghostAStarSearch();
 			grid.resetSearch();
@@ -118,29 +138,10 @@ void ofApp::update(){
 					grid.setGameState("ended");
 			}
 
-			switch (track_result) {
-				case 3:
-					grid.pacMove(DirectionWest);
-					break;
-				case 1:
-					grid.pacMove(DirectionEast);
-					break;
-				case 0:
-					grid.pacMove(DirectionNorth);
-					break;
-				case 2:
-					grid.pacMove(DirectionSouth);
-					break;
-
-			}
 			
-
-
-
+			
 		}
 		
-
-
 	}
 	else if (grid.getGameState() == "ended")
 	{
