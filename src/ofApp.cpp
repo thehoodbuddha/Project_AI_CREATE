@@ -59,9 +59,9 @@ void ofApp::update(){
 	//std::cout << test << std::endl;
 
 	int track_result = track.direction(track.locationPoint.x, track.locationPoint.y, WEBCAM_WIDTH, WEBCAM_HEIGHT);
-	
 	if (grid.getGameState() == "not_started")
 	{
+		
 		switch (track_result) {
 		case 3:
 			if (grid.pacMove(DirectionWest)) 
@@ -218,7 +218,13 @@ void ofApp::draw(){
 		
 	}
 	*/
-		if (grid.getGameState() == "ended") //game has ended
+	if (grid.getGameState() == "not_started")
+	{
+		ofBackground(0);
+		grid.displayGameSplashScreen();
+	}
+
+	else if (grid.getGameState() == "ended") //game has ended
 	{
 
 		grid.displayGameOverScreen();

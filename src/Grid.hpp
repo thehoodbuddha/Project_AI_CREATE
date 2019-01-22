@@ -65,7 +65,7 @@ class Grid : public ofThread{
 	bool gameSoundisPlaying();
 
 	void displayGameOverScreen();
-
+	void displayGameSplashScreen();
 
   private:
     GridElement grid[GRID_SIZE][GRID_SIZE];
