@@ -147,8 +147,8 @@ void ofApp::update(){
 	{
 		if (!grid.gameSoundisPlaying())
 		{
-			grid.gameSoundLoad("lol-youdied.mp3");
-			grid.gameSoundPlay();
+			//grid.gameSoundLoad("lol-youdied.mp3");
+			//grid.gameSoundPlay();
 		}
 		ofBackground(255);
 
