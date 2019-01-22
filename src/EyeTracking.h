@@ -1,7 +1,7 @@
 #pragma once
 #ifndef EyeTracking_h
 #define EyeTracking_h
-
+#include "constants.h"
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
