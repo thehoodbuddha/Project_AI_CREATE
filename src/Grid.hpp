@@ -80,6 +80,7 @@ class Grid : public ofThread{
 	string gameState;
 	ofSoundPlayer gameSound;
 	ofTrueTypeFont gameText;
+	ofImage ghostSprite;
 
 	
 	

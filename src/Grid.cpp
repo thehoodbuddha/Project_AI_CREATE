@@ -59,7 +59,8 @@ Grid::Grid() {
   gameText.setLetterSpacing(1.037);
   score_system = new ScoreSystem(10);
 
- 
+  ghostSprite.load("sprites/red_right.png");
+
 }
 
 void Grid::reset() {
@@ -120,6 +121,8 @@ void Grid::draw() {
 			//pointsystemLocation->draw();
 		}
 	}
+
+	//add custom ghost sprites here
 }
 
 void Grid::clearRect(int first_x, int first_y, int width, int height) {
@@ -245,7 +248,7 @@ void Grid::displayGameOverScreen() {
 	int size_x = gameText.stringWidth(END_GAME);
 	gameText.drawString(END_GAME, WINDOW_WIDTH / 2 - size_x / 2, WINDOW_HEIGHT / 2);
 	string end_score = to_string(score_system->Score_return());
-	end_score = end_score + "out of" + to_string(score_system->get_maxScore());
+	end_score = end_score + " out of " + to_string(score_system->get_maxScore());
 	int size_y = gameText.stringHeight(end_score);
 	gameText.drawString(end_score, WINDOW_WIDTH / 2 - size_x / 2, WINDOW_HEIGHT / 2 + size_y * 2);
 
@@ -254,7 +257,7 @@ void Grid::displayGameOverScreen() {
 void Grid::displayGameSplashScreen(){
 	ofSetColor(255);
 	int size_x, size_y;
-	string splashMessage = "Use your head Nerd literally";
+	string splashMessage = "Use your head literally";
 	size_x = gameText.stringWidth(splashMessage);
 	gameText.drawString(splashMessage, WINDOW_WIDTH / 2 - size_x / 2, WINDOW_HEIGHT / 2);
 	splashMessage = "A game by Anil and JP";

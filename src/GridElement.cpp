@@ -74,11 +74,14 @@ void GridElement::draw(){
 	if (marked) {
 
 		ofSetColor(0, 0, 255);
+		
+		//ghostSprite.draw(x, y);
+
 		ofDrawEllipse((x + 0.5) * GRID_ELEMENT_WIDTH,
 			(y + 0.5) * GRID_ELEMENT_HEIGHT, GRID_ELEMENT_WIDTH * 0.5,
 			GRID_ELEMENT_HEIGHT * 0.5);
-		//ofSetColor(0);
-		//ofDrawBitmapString(score, (x + 0.5) * GRID_ELEMENT_WIDTH, (y + 0.5) * GRID_ELEMENT_HEIGHT);
+		ofSetColor(0);
+		ofDrawBitmapString(score, (x + 0.5) * GRID_ELEMENT_WIDTH, (y + 0.5) * GRID_ELEMENT_HEIGHT);
 	}
 
 	// draw where pacman is
