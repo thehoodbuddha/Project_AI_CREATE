@@ -10,12 +10,12 @@ public:
 	void Score_add(float add_amount);
 	int Score_return();
 	void Display_Score();
-	void set_maxScore(int amount);
+	void add_maxScore(int amount);
 	int get_maxScore();
 private:
 
 	int current_score;
-	int max_score; 
+	 int max_score; 
 
 	ofTrueTypeFont bar_info;
 	//ofTrueTypeFont gameText;

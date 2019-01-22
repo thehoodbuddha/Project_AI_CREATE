@@ -78,18 +78,24 @@ void Grid::setPointsystem() {//int amountofpoints) {                    //genera
 	for (int y = 0; y < GRID_SIZE; y++) {
 		for (int x = 0; x < GRID_SIZE; x++) {
 			if ((std::rand() & 2 + 0) > 1) {
-				//grid[x][y].setPoint();
+	
 				pointsystemLocation = &grid[x][y];
 				int x = std::rand() % 4 + 1;
-				score_system->set_maxScore(2);
-				pointsystemLocation->setPoint(x);
-				//ghostLocation = getEnd();
-				//std::cout << x << std::endl;
+				score_system->add_maxScore(x);                //add to the maxscore system, every iteration. 
+				pointsystemLocation->setPoint(x);             //set a point with a certain score weight. 
+
+				
 			}
 		}
 	}
 }
 
+bool Grid::gamegoal_reached() {
+	 	if (score_system->get_maxScore() == score_system->Score_return()) {
+		return true;
+	}else{return false; }
+	
+}
 
 void Grid::resetSearch() {
   // reset all elements

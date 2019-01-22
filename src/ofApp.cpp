@@ -220,8 +220,8 @@ void ofApp::draw(){
 	*/
 	if (grid.getGameState() == "not_started")
 	{
-		ofBackground(0);
-		grid.displayGameSplashScreen();
+		//ofBackground(0);
+		//grid.displayGameSplashScreen();
 	}
 
 	else if (grid.getGameState() == "ended") //game has ended

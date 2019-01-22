@@ -6,6 +6,7 @@ ScoreSystem::ScoreSystem(int initial_score) {
 	bar_info.load("ARCADECLASSIC.TTF",  INFOBAR_SIZE);
 	bar_info.setLineHeight(18.0f);
 	bar_info.setLetterSpacing(1.037);
+	max_score = 0;
 	//bar_info.drawString(max
 	//)
 }
@@ -18,11 +19,11 @@ void ScoreSystem::Display_Score() {
 	bar_info.drawString("SCORE "+s, 0 , WINDOW_HEIGHT + INFOBAR_SIZE);
 }
 
-void ScoreSystem::set_maxScore(int amount) {
-	max_score = amount; 
+void ScoreSystem::add_maxScore(int amount) {
+	max_score += amount; 
 	
 }
 int ScoreSystem::Score_return() { return current_score; }
 
-int ScoreSystem::get_maxScore() { return max_score; }
+ int ScoreSystem::get_maxScore() { return max_score; }
 
