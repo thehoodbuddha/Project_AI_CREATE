@@ -2,7 +2,7 @@
 #ifndef ScoreSystem_h
 #define ScoreSystem_h
 #include "constants.h"
-
+#include "ofMain.h"
 class ScoreSystem
 {
 public:
@@ -12,8 +12,9 @@ public:
 	void Display_Score();
 
 private:
-	float maxscore;
-//	ofTrueTypeFont bar_info;
+	int maxscore;
+
+	ofTrueTypeFont bar_info;
 	//ofTrueTypeFont gameText;
 };
 

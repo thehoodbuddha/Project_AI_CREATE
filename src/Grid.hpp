@@ -75,7 +75,7 @@ class Grid : public ofThread{
 	enum { astar, greedy, depthfirst };
 
 	GridElement* pointsystemLocation;
-	ScoreSystem score_sys = ScoreSystem(MAX_SCORE);
+	ScoreSystem* score_system;
 
 	string gameState;
 	ofSoundPlayer gameSound;

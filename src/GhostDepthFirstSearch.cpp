@@ -29,9 +29,9 @@ void Grid::ghostDepthFirstSearch(bool searchRandom) {
 	while (!stack.empty()) {
 		GridElement* current_element = stack.top();
 		current_element->visit();
-		
+
 		states++;
-		
+
 		if (current_element == end_element) {
 			// found end, so stop
 			found_end = true;
@@ -50,7 +50,7 @@ void Grid::ghostDepthFirstSearch(bool searchRandom) {
 
 		if (n_unvisited_directions == 0) {
 			stack.pop();
-			
+
 			continue;
 		}
 
@@ -60,9 +60,9 @@ void Grid::ghostDepthFirstSearch(bool searchRandom) {
 
 		GridElement* next_element = current_element->getNeighbour(next_direction);
 		stack.push(next_element);
-		
-		
-		
+
+
+
 	}
 
 	int const path_length = stack.size();
@@ -79,7 +79,7 @@ void Grid::ghostDepthFirstSearch(bool searchRandom) {
 			stack.push(path_element);
 		}
 		stack.pop();
-		
+
 	}
 
 	// print result
@@ -96,6 +96,5 @@ void Grid::ghostDepthFirstSearch(bool searchRandom) {
 				<< ")" << '\n';
 		}
 	}
-	std::this_thread::sleep_for(std::chrono::milliseconds(100));
 
 }

@@ -57,9 +57,10 @@ Grid::Grid() {
   gameText.load("verdana.ttf", 14);
   gameText.setLineHeight(18.0f);
   gameText.setLetterSpacing(1.037);
+  //score_sytem = scoreSystem(10);
+  score_system = new ScoreSystem(10);
 
-
-
+ 
 }
 
 void Grid::reset() {
@@ -112,6 +113,7 @@ void Grid::resetSearch() {
 
 void Grid::draw() {
   // draw all elements
+	score_system->Display_Score();
 	for (int y = 0; y < GRID_SIZE; y++) {
 		for (int x = 0; x < GRID_SIZE; x++) {
 			grid[x][y].draw();
@@ -213,9 +215,9 @@ bool Grid::pacMove(Direction nextMove) {
 
 		if (pointsystemLocation->get_hasPoint() == pacLocation->pacmanHasVisted()) {
 			pointsystemLocation->deletePoint();
-			score_sys.Score_add(pointsystemLocation->get_hasPointWeight());
+			score_system->Score_add(pointsystemLocation->get_hasPointWeight());
 
-			std::cout << "score" << score_sys.Score_return() << std::endl;
+			//std::cout << "score" << score_sys.Score_return() << std::endl;
 		}
 		return true;
 	}
