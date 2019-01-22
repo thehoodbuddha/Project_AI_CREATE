@@ -218,7 +218,7 @@ void ofApp::draw(){
 		
 	}
 	*/
-	if (grid.getGameState() == "ended") //game has ended
+		if (grid.getGameState() == "ended") //game has ended
 	{
 
 		grid.displayGameOverScreen();
