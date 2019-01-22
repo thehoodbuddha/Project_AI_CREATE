@@ -136,6 +136,7 @@ void ofApp::update(){
 				if (currentGhostLocation->getX() == currentPacLocation->getX() &&
 					currentGhostLocation->getY() == currentPacLocation->getY())
 					grid.setGameState("ended");
+					grid.setGameState("ended");
 			}
 
 			
@@ -218,8 +219,8 @@ void ofApp::draw(){
 	*/
 	if (grid.getGameState() == "not_started")
 	{
-		ofBackground(0);
-		grid.displayGameSplashScreen();
+		//ofBackground(0);
+		//grid.displayGameSplashScreen();
 	}
 
 	else if (grid.getGameState() == "ended") //game has ended

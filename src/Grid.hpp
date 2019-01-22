@@ -66,6 +66,7 @@ class Grid : public ofThread{
 
 	void displayGameOverScreen();
 	void displayGameSplashScreen();
+	bool gamegoal_reached();
 
   private:
     GridElement grid[GRID_SIZE][GRID_SIZE];
