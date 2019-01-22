@@ -136,6 +136,7 @@ void ofApp::update(){
 				if (currentGhostLocation->getX() == currentPacLocation->getX() &&
 					currentGhostLocation->getY() == currentPacLocation->getY())
 					grid.setGameState("ended");
+					grid.setGameState("ended");
 			}
 
 			
