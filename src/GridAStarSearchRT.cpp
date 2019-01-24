@@ -26,6 +26,4 @@ public:
 	}
 };
 
-void Grid::aStarSearchRT() {
-	
-}
+
