@@ -11,14 +11,15 @@
 class EyeTracking {
 
 public:
-	cv::Point locationPoint;
+	
 	EyeTracking();
 	int cam_Check();
 	int Eyetrack_Main();
 	int direction(float x, float y, int frame_x, int frame_y);
-
+	
+	cv::Point locationPoint;
 private:
-
+	
 	cv::Point lastPoint;
 	cv::CascadeClassifier faceCascade;
 	cv::CascadeClassifier eyeCascade;

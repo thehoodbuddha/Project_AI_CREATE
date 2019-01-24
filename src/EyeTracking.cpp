@@ -17,6 +17,8 @@ EyeTracking::EyeTracking() {
 	cv::Point locationPoint;
 };
 
+
+
 int EyeTracking::Load_Data() {
 	if (!faceCascade.load("..\\src\\haarcascade_frontalface_default.xml"))
 	{

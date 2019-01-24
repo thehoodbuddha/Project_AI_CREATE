@@ -63,14 +63,7 @@ void GridElement::deletePoint() {
 
 void GridElement::draw(){
 	// draw background if visited
-	/*
-	if (visited) {
-		ofSetColor(200);
-		ofDrawRectangle(x * GRID_ELEMENT_WIDTH, y * GRID_ELEMENT_HEIGHT,
-			GRID_ELEMENT_WIDTH, GRID_ELEMENT_HEIGHT);
-	}
-	*/
-	// draw circle if marked
+
 	if (marked) {
 
 		ofSetColor(0, 0, 255);

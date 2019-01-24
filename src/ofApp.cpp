@@ -34,12 +34,11 @@ void ofApp::setup(){
 void ofApp::update(){
 	
 	namespace sc = std::chrono;
-
 	auto time = sc::system_clock::now(); // get the current time
-
 	auto since_epoch = time.time_since_epoch(); // get the duration since epoch
-
 	auto millis = sc::duration_cast<sc::milliseconds>(since_epoch);
+
+
 
 	int track_result = track.direction(track.locationPoint.x, track.locationPoint.y, WEBCAM_WIDTH, WEBCAM_HEIGHT);
 	if (grid.getGameState() == "not_started")
@@ -150,15 +149,6 @@ void ofApp::draw(){
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key) {
 	switch (key) {
-	
-	/*
-	case 'r':
-		grid.reset();
-		grid.generateMaze();
-		grid.setGameState("not_started");
-		break;
-	*/
-
 	
 	case ' ':
 		grid.setGameState("not_started");
